@@ -13,8 +13,8 @@ text_splitter=RecursiveCharacterTextSplitter(
   is_separator_regex=False,
  )
 
-
 chunks_=text_splitter.create_documents([text])
+# print(chunks_)
 chunks=[c.page_content for c in chunks_]
 
 model="embed-english-v3.0"
@@ -24,8 +24,11 @@ response=co.embed(
     input_type="search_document",
     embedding_types=["float"]
 )
+# print(response)
 embeddings=response.embeddings.float
+# print(embeddings)
 vector_database={i:np.array(embedding) for i,embedding in enumerate(embeddings)}
+print(vector_database)
 query="Give me a list of machine learning models mentioned in the page. Also give a brief description of each model"
 
 response=co.embed(
